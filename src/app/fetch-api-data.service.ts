@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FetchApiDataService {
   // Replace 'your_api_url' with the actual URL of your API
-  apiUrl = 'https://your_api_url_here';
+  apiUrl = 'https://movie-flex-api-95d248252fac.herokuapp.com';
 
   constructor(private http: HttpClient) {}
 
   // User registration
-  public userRegistration(userDetails: any) {
+  public userRegistration(userDetails: any): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/users`, userDetails)
       .pipe(catchError(this.handleError));
   }
 
   // User login
-  public userLogin(userDetails: any) {
+  public userLogin(userDetails: any): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/login`, userDetails)
       .pipe(catchError(this.handleError));
