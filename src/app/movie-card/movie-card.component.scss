@@ -1,0 +1,26 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-content: start;
+    flex-direction: row;
+}
+
+.card-item {
+    max-width: 500px;
+    width: 400px;
+    max-height: 400px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.image-block {
+    max-width: 300px;
+    max-height: 250px;
+}

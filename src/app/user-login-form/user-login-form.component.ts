@@ -54,6 +54,8 @@ export class UserLoginFormComponent {
           token: res.token,
         };
         localStorage.setItem('user', JSON.stringify(user));
+        this.dialogRef.close(); 
+        this.router.navigate(['movies']);
       },
       error: (error) => {
         this.snackBar.open('Login failed: ' + error.message, 'OK', {

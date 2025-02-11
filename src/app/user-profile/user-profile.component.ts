@@ -1,0 +1,129 @@
+import { Component, OnInit } from '@angular/core';
+import { FetchApiDataService } from '../fetch-api-data.service';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+@Component({
+  selector: 'app-user-profile',
+  standalone: true,
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    MatCardActions,
+    MatCardTitle,
+    MatCard,
+    MatCardHeader,
+    MatCardSubtitle,
+    MatSnackBarModule,
+    MatCardContent,
+    CommonModule,
+  ],
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.scss'],
+})
+export class UserProfileComponent implements OnInit {
+  public user: any = {}; 
+  public favoriteMovies: any[] = [];
+
+  constructor(
+    private _fetchApiData: FetchApiDataService,
+    public router: Router
+  ) {
+    this.user = JSON.parse(localStorage.getItem('user') || '');
+  }
+
+  public ngOnInit(): void {
+    this.getUser();
+  }
+
+  public updateUser(): void {
+    this._fetchApiData.editUser(this.user.username, this.user).subscribe(
+      (res: any) => {
+        if(res) {
+          this.user = {
+            ...res,
+            id: res._id,
+            password: this.user.password,
+            token: this.user.token,
+          };
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.getfavoriteMovies();
+        }
+      },
+      (err: any) => {
+        console.error(err);
+      }
+    );
+  }
+
+  public resetUser(): void {
+    this.user = JSON.parse(localStorage.getItem('user') || '');
+  }
+
+  public backToMovie(): void {
+    this.router.navigate(['movies']);
+  }
+
+  public getfavoriteMovies(): void {
+    this._fetchApiData.getAllMovies().subscribe(
+      (res: any) => {
+        this.favoriteMovies = res.filter((movie: any) => {
+          return this.user.favoriteMovies.includes(movie._id);
+        });
+      },
+      (err: any) => {
+        console.error(err);
+      }
+    );
+  }
+
+  public getUser(): void {
+    this._fetchApiData.getUser(this.user.id).subscribe((res: any) => {
+      if(res) {
+        this.user = {
+          ...res,
+          id: res._id,
+          password: this.user.password,
+          token: this.user.token,
+        };
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.getfavoriteMovies();
+      }
+    });
+  }
+
+  public removeFromFavorite(movie: any): void {
+    this._fetchApiData.deleteFavoriteMovie(this.user.id, movie.title).subscribe(
+      (res: any) => {
+        this.user.favoriteMovies = res.favoriteMovies;
+        this.getfavoriteMovies();
+      },
+      (err: any) => {
+        console.error(err);
+      }
+    );
+  }
+
+  public logout(): void {
+    this.router.navigate(['welcome']);
+    localStorage.removeItem('user');
+  }
+}

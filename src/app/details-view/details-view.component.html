@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Details</h2>
+<mat-dialog-content>
+  <div *ngIf="data.genres">
+    <h3>Genres:</h3>
+    <h4>Name: {{data.genres.name}}</h4>
+    <h4>Description: {{data.genres.description}}</h4>
+  </div>
+  <div *ngIf="data.directors">
+    <h3>Directors:</h3>
+    <h4>Name: {{data.directors.name}}</h4>
+    <h4>BirthYear: {{data.directors.birthYear}}</h4>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Close</button>
+</mat-dialog-actions>
