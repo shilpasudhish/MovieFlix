@@ -20,6 +20,7 @@
             "outputPath": "dist/MovieFlix",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "baseHref": "/MovieFlix/",
             "polyfills": [
               "zone.js"
             ],
