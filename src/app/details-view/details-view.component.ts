@@ -31,12 +31,21 @@ export class DetailsViewComponent implements OnInit {
     public dialogRef: MatDialogRef<DetailsViewComponent>
   ) {}
 
+  /**
+   * OnInit lifecycle hook. Initialize the component's data from the provided input data.
+   * If the data is not provided, set the component's data to default values.
+   */
   public ngOnInit(): void {
     this.genres = this.data.genres || [];
     this.directors = this.data.directors || [];
     this.movie = this.data.movie || {};
   }
 
+  /**
+   * Close the details view dialog box.
+   * This method is called from the component's template.
+   * When called, it will close the dialog box and cause the component to be destroyed.
+   */
   public closeMessageBox(): void {
     this.dialogRef.close();
   }

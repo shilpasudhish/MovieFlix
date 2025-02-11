@@ -14,12 +14,20 @@ export class WelcomePageComponent {
 
   constructor(public dialog: MatDialog) {}
 
+  /**
+   * Opens a dialog for user registration.
+   * @returns {void}
+   */
   public openUserRegistrationDialog(): void {
     this.dialog.open(UserRegistrationFormComponent, {
       width: '300px',
     });
   }
 
+  /**
+   * Opens a dialog for user login.
+   * @returns {void}
+   */
   public openUserLoginDialog(): void {
     this.dialog.open(UserLoginFormComponent, {
       width: '300px',

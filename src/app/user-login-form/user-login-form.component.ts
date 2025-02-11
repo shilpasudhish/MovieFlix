@@ -37,6 +37,12 @@ export class UserLoginFormComponent {
 
   }
 
+  /**
+   * Logs in the user. If the login is successful, it
+   * sets the user data in local storage, closes the dialog
+   * and navigates to the movies page. If the login fails, it
+   * shows an error message in a snackbar.
+   */
   public logInUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe({
       next: (res: any) => {

@@ -37,8 +37,15 @@ export class UserRegistrationFormComponent {
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar
   ) {
-
   }
+
+/**
+ * Registers a new user by sending the user data to the server. Converts the
+ * user's birthday to an ISO string format before sending the data. Upon 
+ * successful registration, closes the registration dialog and displays a 
+ * success message in a snackbar. If registration fails, displays an error 
+ * message in a snackbar.
+ */
 
   public registerUser(): void {
     const dateString = this.userData.birthday; 
