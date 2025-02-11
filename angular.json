@@ -23,7 +23,6 @@
             "polyfills": [
               "zone.js"
             ],
-            "baseHref": "/MovieFlix/",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
