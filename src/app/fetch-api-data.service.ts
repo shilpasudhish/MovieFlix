@@ -154,7 +154,7 @@ export class FetchApiDataService {
   public getUser(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(`${this.apiUrl}/movies/users/${username}`, {
+      .get(`${this.apiUrl}/users/${username}`, {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       })
       .pipe(catchError(this.handleError));

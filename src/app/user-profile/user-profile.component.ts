@@ -148,9 +148,12 @@ export class UserProfileComponent implements OnInit {
  */
 
   public removeFromFavorite(movie: any): void {
-    this._fetchApiData.deleteFavoriteMovie(this.user.username, movie.title).subscribe(
+    this._fetchApiData.deleteFavoriteMovie(this.user.username, movie._id).subscribe(
       (res: any) => {
-        this.user.favoriteMovies = res.favoriteMovies;
+        this.user.favorites = this.user.favorites.filter(
+          (id: string) => id !== movie._id
+        );
+        localStorage.setItem('user', JSON.stringify(this.user));
         this.getfavoriteMovies();
       },
       (err: any) => {
