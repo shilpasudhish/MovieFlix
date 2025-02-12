@@ -10,6 +10,13 @@
     <h4>Name: {{data.directors.name}}</h4>
     <h4>BirthYear: {{data.directors.birthYear}}</h4>
   </div>
+  <div *ngIf="data.movie">
+    <h3>Details:</h3>
+    <h4>Name: {{data.movie.title}}</h4>
+    <h4>Director: {{data.movie.director.name}}</h4>
+    <h4>Rating: {{data.movie.rating}}</h4>
+    <h4>Release dYear: {{data.movie.releaseYear}}</h4>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="dialogRef.close()">Close</button>

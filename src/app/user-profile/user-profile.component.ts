@@ -57,6 +57,7 @@ export class UserProfileComponent implements OnInit {
    */
   public ngOnInit(): void {
     this.getUser();
+    this.getfavoriteMovies();
   }
 
   /**
@@ -66,7 +67,7 @@ export class UserProfileComponent implements OnInit {
    * the getfavoriteMovies() function to update the favorite movies array.
    */
   public updateUser(): void {
-    this._fetchApiData.editUser(this.user.username, this.user).subscribe(
+    this._fetchApiData.editUser(this.user).subscribe(
       (res: any) => {
         if(res) {
           this.user = {
@@ -110,7 +111,7 @@ export class UserProfileComponent implements OnInit {
     this._fetchApiData.getAllMovies().subscribe(
       (res: any) => {
         this.favoriteMovies = res.filter((movie: any) => {
-          return this.user.favoriteMovies.includes(movie._id);
+          return this.user.favorites.includes(movie._id);
         });
       },
       (err: any) => {
@@ -123,7 +124,7 @@ export class UserProfileComponent implements OnInit {
    * Gets the user information from the database and updates the local user object
    */
   public getUser(): void {
-    this._fetchApiData.getUser(this.user.id).subscribe((res: any) => {
+    this._fetchApiData.getUser(this.user.username).subscribe((res: any) => {
       if(res) {
         this.user = {
           ...res,
@@ -147,7 +148,7 @@ export class UserProfileComponent implements OnInit {
  */
 
   public removeFromFavorite(movie: any): void {
-    this._fetchApiData.deleteFavoriteMovie(this.user.id, movie.title).subscribe(
+    this._fetchApiData.deleteFavoriteMovie(this.user.username, movie.title).subscribe(
       (res: any) => {
         this.user.favoriteMovies = res.favoriteMovies;
         this.getfavoriteMovies();
@@ -163,7 +164,8 @@ export class UserProfileComponent implements OnInit {
  */
 
   public logout(): void {
-    this.router.navigate(['welcome']);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.router.navigate(['welcome']);
   }
 }

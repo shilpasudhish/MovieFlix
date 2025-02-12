@@ -132,25 +132,22 @@ export class MovieCardComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user') || '');
     if (!user) return;
     const username = user.username;
-    if (this.isFavorite(movie)) {
+    if (movie.isFavorite) {
       this._fetchApiData
         .deleteFavoriteMovie(username, movie._id)
         .subscribe(() => {
+          user.favorites = user.favorites.filter(
+            (id: string) => id !== movie._id
+          );
+          localStorage.setItem('user', JSON.stringify(user));
           this.getMovies(); 
         });
     } else {
       this._fetchApiData.addFavoriteMovie(username, movie._id).subscribe(() => {
+        user.favorites.push(movie._id);
+        localStorage.setItem('user', JSON.stringify(user));
         this.getMovies(); 
       });
     }
-  }
-  
-  /**
-   * Checks if a movie is in the user's favorite movies list.
-   * @param movie The movie object to check.
-   * @returns True if the movie is in the user's favorite movies list, false otherwise.
-   */
-  public isFavorite(movie: any): boolean {
-    return this.movies.some((favMovie) => favMovie._id === movie._id);
   }
 }
